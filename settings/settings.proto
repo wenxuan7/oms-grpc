@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package="github.com/wenxuan7/oms-grpc/settings";
+
+package settings;
+
+message SettingsReq {
+  string k = 1;
+}
+
+message SettingsResp {
+  string v = 1;
+}
+
+message SettingsMultiReq {
+  repeated string ks = 1;
+}
+
+message SettingsMultiResp {
+  map<string, string> kvs = 1;
+}
+
+service settingsReader {
+  rpc Get(SettingsReq) returns(SettingsResp);
+  rpc Gets(SettingsMultiReq) returns(SettingsMultiResp);
+}
