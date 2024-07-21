@@ -18,122 +18,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// SettingsReaderClient is the client API for SettingsReader service.
+// ReaderClient is the client API for Reader service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type SettingsReaderClient interface {
-	Get(ctx context.Context, in *SettingsReq, opts ...grpc.CallOption) (*SettingsResp, error)
-	Gets(ctx context.Context, in *SettingsMultiReq, opts ...grpc.CallOption) (*SettingsMultiResp, error)
+type ReaderClient interface {
+	Get(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Resp, error)
+	Gets(ctx context.Context, in *MultiReq, opts ...grpc.CallOption) (*MultiResp, error)
 }
 
-type settingsReaderClient struct {
+type readerClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewSettingsReaderClient(cc grpc.ClientConnInterface) SettingsReaderClient {
-	return &settingsReaderClient{cc}
+func NewReaderClient(cc grpc.ClientConnInterface) ReaderClient {
+	return &readerClient{cc}
 }
 
-func (c *settingsReaderClient) Get(ctx context.Context, in *SettingsReq, opts ...grpc.CallOption) (*SettingsResp, error) {
-	out := new(SettingsResp)
-	err := c.cc.Invoke(ctx, "/settings.settingsReader/Get", in, out, opts...)
+func (c *readerClient) Get(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Resp, error) {
+	out := new(Resp)
+	err := c.cc.Invoke(ctx, "/settings.Reader/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *settingsReaderClient) Gets(ctx context.Context, in *SettingsMultiReq, opts ...grpc.CallOption) (*SettingsMultiResp, error) {
-	out := new(SettingsMultiResp)
-	err := c.cc.Invoke(ctx, "/settings.settingsReader/Gets", in, out, opts...)
+func (c *readerClient) Gets(ctx context.Context, in *MultiReq, opts ...grpc.CallOption) (*MultiResp, error) {
+	out := new(MultiResp)
+	err := c.cc.Invoke(ctx, "/settings.Reader/Gets", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// SettingsReaderServer is the server API for SettingsReader service.
-// All implementations must embed UnimplementedSettingsReaderServer
+// ReaderServer is the server API for Reader service.
+// All implementations must embed UnimplementedReaderServer
 // for forward compatibility
-type SettingsReaderServer interface {
-	Get(context.Context, *SettingsReq) (*SettingsResp, error)
-	Gets(context.Context, *SettingsMultiReq) (*SettingsMultiResp, error)
-	mustEmbedUnimplementedSettingsReaderServer()
+type ReaderServer interface {
+	Get(context.Context, *Req) (*Resp, error)
+	Gets(context.Context, *MultiReq) (*MultiResp, error)
+	mustEmbedUnimplementedReaderServer()
 }
 
-// UnimplementedSettingsReaderServer must be embedded to have forward compatible implementations.
-type UnimplementedSettingsReaderServer struct {
+// UnimplementedReaderServer must be embedded to have forward compatible implementations.
+type UnimplementedReaderServer struct {
 }
 
-func (UnimplementedSettingsReaderServer) Get(context.Context, *SettingsReq) (*SettingsResp, error) {
+func (UnimplementedReaderServer) Get(context.Context, *Req) (*Resp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
-func (UnimplementedSettingsReaderServer) Gets(context.Context, *SettingsMultiReq) (*SettingsMultiResp, error) {
+func (UnimplementedReaderServer) Gets(context.Context, *MultiReq) (*MultiResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Gets not implemented")
 }
-func (UnimplementedSettingsReaderServer) mustEmbedUnimplementedSettingsReaderServer() {}
+func (UnimplementedReaderServer) mustEmbedUnimplementedReaderServer() {}
 
-// UnsafeSettingsReaderServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SettingsReaderServer will
+// UnsafeReaderServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ReaderServer will
 // result in compilation errors.
-type UnsafeSettingsReaderServer interface {
-	mustEmbedUnimplementedSettingsReaderServer()
+type UnsafeReaderServer interface {
+	mustEmbedUnimplementedReaderServer()
 }
 
-func RegisterSettingsReaderServer(s grpc.ServiceRegistrar, srv SettingsReaderServer) {
-	s.RegisterService(&SettingsReader_ServiceDesc, srv)
+func RegisterReaderServer(s grpc.ServiceRegistrar, srv ReaderServer) {
+	s.RegisterService(&Reader_ServiceDesc, srv)
 }
 
-func _SettingsReader_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SettingsReq)
+func _Reader_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Req)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SettingsReaderServer).Get(ctx, in)
+		return srv.(ReaderServer).Get(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/settings.settingsReader/Get",
+		FullMethod: "/settings.Reader/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsReaderServer).Get(ctx, req.(*SettingsReq))
+		return srv.(ReaderServer).Get(ctx, req.(*Req))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SettingsReader_Gets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SettingsMultiReq)
+func _Reader_Gets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SettingsReaderServer).Gets(ctx, in)
+		return srv.(ReaderServer).Gets(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/settings.settingsReader/Gets",
+		FullMethod: "/settings.Reader/Gets",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsReaderServer).Gets(ctx, req.(*SettingsMultiReq))
+		return srv.(ReaderServer).Gets(ctx, req.(*MultiReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// SettingsReader_ServiceDesc is the grpc.ServiceDesc for SettingsReader service.
+// Reader_ServiceDesc is the grpc.ServiceDesc for Reader service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var SettingsReader_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "settings.settingsReader",
-	HandlerType: (*SettingsReaderServer)(nil),
+var Reader_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "settings.Reader",
+	HandlerType: (*ReaderServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Get",
-			Handler:    _SettingsReader_Get_Handler,
+			Handler:    _Reader_Get_Handler,
 		},
 		{
 			MethodName: "Gets",
-			Handler:    _SettingsReader_Gets_Handler,
+			Handler:    _Reader_Gets_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
