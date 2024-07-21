@@ -1,11 +1,13 @@
 syntax = "proto3";
 
-option go_package="github.com/wenxuan7/oms-grpc/settings";
+option go_package = "github.com/wenxuan7/oms-grpc/settings";
 
 package settings;
 
 message Req {
-  string k = 1;
+  uint32 companyId = 1;
+  string traceId = 2;
+  string k = 3;
 }
 
 message Resp {
@@ -13,7 +15,9 @@ message Resp {
 }
 
 message MultiReq {
-  repeated string ks = 1;
+  uint32 companyId = 1;
+  string traceId = 2;
+  repeated string ks = 3;
 }
 
 message MultiResp {
