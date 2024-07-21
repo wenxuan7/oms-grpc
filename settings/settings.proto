@@ -17,7 +17,7 @@ message MultiReq {
 }
 
 message MultiResp {
-  map<string, string> kvs = 1;
+  map<string, string> vs = 1;
 }
 
 service Reader {
